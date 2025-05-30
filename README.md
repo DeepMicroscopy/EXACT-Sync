@@ -15,7 +15,7 @@ In the folder examples
 
 ## Pip
 
-pip install EXCAT-Sync
+pip install EXACT-Sync
 
 ## Tests
 
