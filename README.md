@@ -1,6 +1,6 @@
 # EXACT-Sync
 
-[![PyPI version fury.io](https://badge.fury.io/py/EXCAT-Sync.svg)](https://pypi.python.org/pypi/EXCAT-Sync/)
+[![PyPI version fury.io](https://badge.fury.io/py/EXACT-Sync.svg)](https://pypi.python.org/pypi/EXACT-Sync/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 
