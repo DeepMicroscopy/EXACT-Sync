@@ -253,7 +253,28 @@ class ImagesApi(PaginationBaseAPI):
 
         return Image.open(BytesIO(response.data))
 
+    def crop_image_from_image(self, image_id, x, y, z, w, h, target_imageset_id, **kwargs):
+        """Call the crop_from_image Django view via the REST API"""
+        
+        path = f'/images/api/image/crop/{image_id}/{x}/{y}/{z}/{w}/{h}/{target_imageset_id}/'
 
+        return self.api_client.call_api(
+            path, 'GET',
+            path_params={},
+            query_params=[],
+            header_params={},
+            body=None,
+            post_params=[],
+            files={},
+            response_type='Image',  # or 'dict' if serialized
+            auth_settings=['basicAuth'],  # <- crucial for Basic Auth
+            async_req=kwargs.get('async_req'),
+            _return_http_data_only=kwargs.get('_return_http_data_only', True),
+            _preload_content=kwargs.get('_preload_content', True),
+            _request_timeout=kwargs.get('_request_timeout'),
+            collection_formats={}
+        )  
+                
     def create_image(self, **kwargs):  # noqa: E501
         """create_image  # noqa: E501
 
@@ -1237,14 +1258,14 @@ class ImagesApi(PaginationBaseAPI):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method retrieve_image" % key
+                    " to method download_thumbnail" % key
                 )
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'id' is set
         if ('id' not in params or
                 params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `retrieve_image`")  # noqa: E501
+            raise ValueError("Missing the required parameter `id` when calling `download_thumbnail`")  # noqa: E501
 
         collection_formats = {}
         path_params = {}
