@@ -43,6 +43,17 @@ product_api = ProductsApi(client)
 team_api = TeamsApi(client)
 ```
 
+Authentication by token:
+
+```python
+configuration = Configuration()
+configuration.token = 'pat_....<your token here>'
+configuration.host = "http://127.0.0.1:8000"
+
+client = ApiClient(configuration)
+image_sets_api = ImageSetsApi(client)
+```
+
 
 #### Get image set information
 ```python
