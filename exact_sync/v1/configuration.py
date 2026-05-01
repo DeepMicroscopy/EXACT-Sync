@@ -61,6 +61,10 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
         self.username = "exact"
         # Password for HTTP basic authentication
         self.password = "exact"
+        # Token for token-based authentication (takes precedence over username/password)
+        self.token = None
+        # Prefix for the Authorization header when using token auth (e.g. 'Bearer' for PAT, 'Token' for Djoser)
+        self.token_prefix = 'Bearer'
         # Logging Settings
         self.logger = {}
         self.logger["package_logger"] = logging.getLogger("swagger_client")
@@ -228,13 +232,17 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
 
         :return: The Auth Settings information dict.
         """
+        if self.token:
+            auth_value = '%s %s' % (self.token_prefix, self.token)
+        else:
+            auth_value = self.get_basic_auth_token()
         return {
             'basicAuth':
                 {
                     'type': 'basic',
                     'in': 'header',
                     'key': 'Authorization',
-                    'value': self.get_basic_auth_token()
+                    'value': auth_value
                 },
         }
 

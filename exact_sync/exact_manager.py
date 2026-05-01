@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 import requests
 import json
-from requests.auth import HTTPBasicAuth
+from requests.auth import HTTPBasicAuth, AuthBase
 import time
 import datetime
 import re
@@ -10,6 +10,16 @@ import sys
 from functools import partial
 from tqdm import tqdm
 from requests_toolbelt.multipart import encoder
+
+
+class _TokenAuth(AuthBase):
+    def __init__(self, token, prefix='Bearer'):
+        self.token = token
+        self.prefix = prefix
+
+    def __call__(self, r):
+        r.headers['Authorization'] = f'{self.prefix} {self.token}'
+        return r
 
 from exact_sync.exact_enums import *
 from exact_sync.exact_errors import *
@@ -31,9 +41,11 @@ class ExactImageList():
 
 class ExactManager():
 
-    def __init__(self, username:str=None, password:str=None, serverurl:str=None, logfile=sys.stdout, loglevel:int=1):
+    def __init__(self, username:str=None, password:str=None, serverurl:str=None, token:str=None, token_prefix:str='Bearer', logfile=sys.stdout, loglevel:int=1):
         self.username = username
         self.password = password
+        self.token = token
+        self.token_prefix = token_prefix
         self.serverurl = serverurl if serverurl[-1]=='/' else serverurl+'/'
         self.progress_denominator = 1
         self.progress_offset = 0
@@ -41,7 +53,8 @@ class ExactManager():
 
         self.logfile = logfile
         self.loglevel = loglevel
-        self.log(0,f'Created EXM with username {username}, serverurl: {serverurl}')        
+        auth_method = 'token' if token else 'basic'
+        self.log(0,f'Created EXM with username {username}, serverurl: {serverurl}, auth: {auth_method}')        
         stat, ret = self.get('timesync/')
         timeoffset = abs(json.loads(ret)['unixtime']-time.time())
         if (stat==200) and (timeoffset>10):
@@ -65,6 +78,12 @@ class ExactManager():
         self.progress_denominator=float(denominator)
         self.offset=float(offset)
 
+
+    @property
+    def _auth(self):
+        if self.token:
+            return _TokenAuth(self.token, self.token_prefix)
+        return (self.username, self.password)
 
     def create_progressbar(self, e:encoder.MultipartEncoder):
 
@@ -94,7 +113,7 @@ class ExactManager():
     #region POST commands
 
     def json_post_request(self,url) -> dict:
-        req = requests.post(url, auth = (self.username, self.password))
+        req = requests.post(url, auth=self._auth)
         if req.status_code==403:
             raise AccessViolationError('Permission denied by exact server for current user'+req.text)
         try: 
@@ -346,7 +365,7 @@ class ExactManager():
 
     def post(self, url, data, files=None, **kwargs):
         try:
-            ret= requests.post(self.serverurl+url, auth=(self.username, self.password), data=data, files=files, **kwargs)
+            ret= requests.post(self.serverurl+url, auth=self._auth, data=data, files=files, **kwargs)
         except requests.exceptions.ConnectionError as e:
             return self.post(url, data, files, **kwargs)
         try:
@@ -360,11 +379,11 @@ class ExactManager():
     #region GET commands
 
     def get(self, url, params={}):
-        ret= requests.get(self.serverurl+url, auth=(self.username, self.password), params=params)
+        ret= requests.get(self.serverurl+url, auth=self._auth, params=params)
         return ret.status_code, ret.text
 
     def json_get_request(self,url) -> dict:
-        req = requests.get(url, auth = (self.username, self.password))
+        req = requests.get(url, auth=self._auth)
         if req.status_code==403:
             raise AccessViolationError('Permission denied by exact server for current user'+req.text)
         try: 
@@ -373,7 +392,7 @@ class ExactManager():
             return dict()
 
     def csv_get_request(self,url) -> list:
-        req = requests.get(url, auth = (self.username, self.password))
+        req = requests.get(url, auth=self._auth)
         try: 
             return req.text.split(',')
         except:
@@ -422,7 +441,7 @@ class ExactManager():
         return self.json_get_request(self.serverurl+'images/api/imageset/load?image_set_id=%d' % imageset_id)['image_set']
    
     def getfile(self, url, target_path, callback) -> (int, str, bytes):
-        with requests.get(self.serverurl+url, auth=(self.username, self.password), stream=True) as r:
+        with requests.get(self.serverurl+url, auth=self._auth, stream=True) as r:
             r.raise_for_status()
             f = open(str(target_path),'wb')
             siz=0

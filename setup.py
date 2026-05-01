@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="EXACT-Sync", 
-    version="0.0.39",
+    version="0.0.40",
     author="Christian Marzahl, Marc Aubreville",
     author_email="marc.aubreville@hs-flensburg.de",
     description="A package to download images and annotations from the EXACT Server https://github.com/DeepMicroscopy/Exact",
