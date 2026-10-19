@@ -275,6 +275,47 @@ class ImagesApi(PaginationBaseAPI):
             collection_formats={}
         )  
                 
+    def get_snapshot(self, image_source, x, y, size_x, size_y, **kwargs):
+        """Retrieve a PNG snapshot centered on a coordinate of the given image.
+
+        Calls the EXACT `centered_image_snapshot` Django view via the REST API.
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_snapshot(image_source, x, y, size_x, size_y, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param int image_source: (required) id of the image to snapshot
+        :param int x: (required) x-coordinate to center the snapshot on
+        :param int y: (required) y-coordinate to center the snapshot on
+        :param int size_x: (required) width of the snapshot
+        :param int size_y: (required) height of the snapshot
+        :return: PIL.Image.Image
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        path = f'/images/image/centered_snapshot/{image_source}/{x}/{y}/{size_x}/{size_y}/'
+
+        response = self.api_client.call_api(
+            path, 'GET',
+            path_params={},
+            query_params=[],
+            header_params={},
+            body=None,
+            post_params=[],
+            files={},
+            response_type=None,
+            auth_settings=['basicAuth'],
+            async_req=kwargs.get('async_req'),
+            _return_http_data_only=kwargs.get('_return_http_data_only', True),
+            _preload_content=kwargs.get('_preload_content', False),
+            _request_timeout=kwargs.get('_request_timeout'),
+            collection_formats={}
+        )
+
+        return Image.open(BytesIO(response.data))
+
     def create_image(self, **kwargs):  # noqa: E501
         """create_image  # noqa: E501
 

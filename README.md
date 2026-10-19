@@ -80,4 +80,11 @@ images_api.download_image(id=image_id, target_path=image_path, original_image=Tr
 annotations_api.list_annotations(pagination=False, async_req=True, image=image.id)
 ```
 
+#### Get a snapshot centered on a coordinate
+
+```python
+snapshot = images_api.get_snapshot(image_source=image.id, x=1000, y=1000, size_x=512, size_y=512)
+snapshot.save('snapshot.png')
+```
+
 
