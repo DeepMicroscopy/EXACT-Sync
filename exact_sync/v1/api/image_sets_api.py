@@ -28,10 +28,11 @@ class ImageSetsApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_image_set(self, **kwargs):  # noqa: E501
         """create_image_set  # noqa: E501
@@ -110,7 +111,7 @@ class ImageSetsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/image_sets/', 'POST',
             path_params,
             query_params,
@@ -201,7 +202,7 @@ class ImageSetsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/image_sets/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -397,7 +398,7 @@ class ImageSetsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/image_sets/', 'GET',
             path_params,
             query_params,
@@ -518,7 +519,7 @@ class ImageSetsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/image_sets/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -704,7 +705,7 @@ class ImageSetsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/image_sets/{id}/', 'GET',
             path_params,
             query_params,
@@ -804,7 +805,7 @@ class ImageSetsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/image_sets/{id}/', 'PUT',
             path_params,
             query_params,
@@ -907,7 +908,7 @@ class ImageSetsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        response = self.api_client.call_api(
+        response = self._call_api(
             f'/api/v1/images/image_sets/list_server/', 'GET',
             path_params,
             query_params,

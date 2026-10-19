@@ -31,10 +31,11 @@ class ImageRegistrationApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_image_registration(self, **kwargs):  # noqa: E501
         """create_image_registration  # noqa: E501
@@ -154,7 +155,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/registration/', 'POST',
             path_params,
             query_params,
@@ -243,7 +244,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/registration/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -375,7 +376,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/registration/', 'GET',
             path_params,
             query_params,
@@ -499,7 +500,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/registration/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -601,7 +602,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/registration/{id}/', 'GET',
             path_params,
             query_params,
@@ -730,7 +731,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/registration/{id}/', 'PUT',
             path_params,
             query_params,
@@ -884,7 +885,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             f'/api/v1/images/images/{source_image}/register_images/', 'POST',
             path_params,
             query_params,
@@ -935,7 +936,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        response, status_code, header = self.api_client.call_api(
+        response, status_code, header = self._call_api(
             file, 'GET',
             path_params,
             query_params,
@@ -1054,7 +1055,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        response = self.api_client.call_api(
+        response = self._call_api(
             f'/api/v1/images/registration/{id}/convert_coodinates/', 'GET',
             path_params,
             query_params,
@@ -1156,7 +1157,7 @@ class ImageRegistrationApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             f'/api/v1/images/registration/{id}/create_inverse_registration/', 'GET',
             path_params,
             query_params,

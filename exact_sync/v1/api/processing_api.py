@@ -26,10 +26,11 @@ class ProcessingApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_plugin(self, **kwargs):  # noqa: E501
         """create_plugin  # noqa: E501
@@ -145,7 +146,7 @@ class ProcessingApi(PaginationBaseAPI):
         auth_settings = ['basicAuth']
   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/plugins/', 'POST',
             path_params,
             query_params,
@@ -258,7 +259,7 @@ class ProcessingApi(PaginationBaseAPI):
 
         print('Running query with: ',{'path_params':path_params,'query_params':query_params, 'body_params':body_params, 'post_params':form_params})
         
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginjobs/', 'POST',
             path_params,
             query_params,
@@ -368,7 +369,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresults/', 'POST',
             path_params,
             query_params,
@@ -483,7 +484,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultannotations/', 'POST',
             path_params,
             query_params,
@@ -602,7 +603,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultbitmaps/', 'POST',
             path_params,
             query_params,
@@ -716,7 +717,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultentrys/', 'POST',
             path_params,
             query_params,
@@ -830,7 +831,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/plugins/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -938,7 +939,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginjobs/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1049,7 +1050,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresults/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1165,7 +1166,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultannotations/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1282,7 +1283,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultbitmaps/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1396,7 +1397,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultentrys/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1503,7 +1504,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginjobs/', 'GET',
             path_params,
             query_params,
@@ -1609,7 +1610,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultannotations/', 'GET',
             path_params,
             query_params,
@@ -1704,7 +1705,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/plugins/', 'GET',
             path_params,
             query_params,
@@ -1799,7 +1800,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultbitmaps/', 'GET',
             path_params,
             query_params,
@@ -1897,7 +1898,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultentrys/', 'GET',
             path_params,
             query_params,
@@ -2001,7 +2002,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresults/', 'GET',
             path_params,
             query_params,
@@ -2092,7 +2093,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/plugins/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -2183,7 +2184,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginjobs/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -2274,7 +2275,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresults/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -2365,7 +2366,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultannotations/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -2456,7 +2457,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultbitmaps/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -2547,7 +2548,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultentrys/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -2650,7 +2651,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/plugins/{id}/', 'PUT',
             path_params,
             query_params,
@@ -2754,7 +2755,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginjobs/{id}/', 'PUT',
             path_params,
             query_params,
@@ -2857,7 +2858,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresults/{id}/', 'PUT',
             path_params,
             query_params,
@@ -2960,7 +2961,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultannotations/{id}/', 'PUT',
             path_params,
             query_params,
@@ -3109,7 +3110,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']   # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultbitmaps/{id}/', 'PUT',
             path_params,
             query_params,
@@ -3213,7 +3214,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultentrys/{id}/', 'PUT',
             path_params,
             query_params,
@@ -3308,7 +3309,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/plugins/{id}/', 'GET',
             path_params,
             query_params,
@@ -3403,7 +3404,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginjobs/{id}/', 'GET',
             path_params,
             query_params,
@@ -3498,7 +3499,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresults/{id}/', 'GET',
             path_params,
             query_params,
@@ -3593,7 +3594,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultannotations/{id}/', 'GET',
             path_params,
             query_params,
@@ -3688,7 +3689,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultbitmaps/{id}/', 'GET',
             path_params,
             query_params,
@@ -3783,7 +3784,7 @@ class ProcessingApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/processing/pluginresultentrys/{id}/', 'GET',
             path_params,
             query_params,

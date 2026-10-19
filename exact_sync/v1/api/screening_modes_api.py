@@ -27,10 +27,11 @@ class ScreeningModesApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_screening_mode(self, **kwargs):  # noqa: E501
         """create_screening_mode  # noqa: E501
@@ -141,7 +142,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/', 'POST',
             path_params,
             query_params,
@@ -280,7 +281,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/', 'POST',
             path_params,
             query_params,
@@ -419,7 +420,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/', 'POST',
             path_params,
             query_params,
@@ -520,7 +521,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -637,7 +638,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/', 'GET',
             path_params,
             query_params,
@@ -782,7 +783,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -941,7 +942,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1100,7 +1101,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1214,7 +1215,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/{id}/', 'GET',
             path_params,
             query_params,
@@ -1359,7 +1360,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/{id}/', 'PUT',
             path_params,
             query_params,
@@ -1518,7 +1519,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/{id}/', 'PUT',
             path_params,
             query_params,
@@ -1677,7 +1678,7 @@ class ScreeningModesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/screening_modes/{id}/', 'PUT',
             path_params,
             query_params,

@@ -28,10 +28,11 @@ class AnnotationTypesApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_annotation_type(self, **kwargs):  # noqa: E501
         """create_annotation_type  # noqa: E501
@@ -109,7 +110,7 @@ class AnnotationTypesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_types/', 'POST',
             path_params,
             query_params,
@@ -197,7 +198,7 @@ class AnnotationTypesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_types/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -345,7 +346,7 @@ class AnnotationTypesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_types/', 'GET',
             path_params,
             query_params,
@@ -477,7 +478,7 @@ class AnnotationTypesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_types/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -617,7 +618,7 @@ class AnnotationTypesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_types/{id}/', 'GET',
             path_params,
             query_params,
@@ -717,7 +718,7 @@ class AnnotationTypesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_types/{id}/', 'PUT',
             path_params,
             query_params,

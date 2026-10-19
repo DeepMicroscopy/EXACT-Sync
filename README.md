@@ -87,4 +87,22 @@ snapshot = images_api.get_snapshot(image_source=image.id, x=1000, y=1000, size_x
 snapshot.save('snapshot.png')
 ```
 
+#### Automatic retries on gateway errors
 
+All API objects retry requests that fail with a transient gateway error (HTTP 502, 503 or 504)
+using exponential backoff (0.5s, 1s, 2s, ... up to 5 attempts). Retrying is enabled by default
+and works for synchronous and `async_req=True` calls.
+
+```python
+images_api = ImagesApi(client)                 # retries enabled (default)
+images_api = ImagesApi(client, retry=False)    # retries disabled
+images_api.retry = False                       # or toggle later
+
+# optional tuning, per instance or per class
+images_api.retry_max_attempts = 3
+images_api.retry_backoff = 1.0
+images_api.retry_statuses = (502,)
+```
+
+Note: non-idempotent requests (e.g. `create_*`) are retried as well, so in rare cases a
+request that the server already processed could be executed twice.

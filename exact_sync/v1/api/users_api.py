@@ -27,10 +27,11 @@ class UsersApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_user(self, **kwargs):  # noqa: E501
         """create_user  # noqa: E501
@@ -129,7 +130,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/', 'POST',
             path_params,
             query_params,
@@ -250,7 +251,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/', 'POST',
             path_params,
             query_params,
@@ -371,7 +372,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/', 'POST',
             path_params,
             query_params,
@@ -492,7 +493,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -629,7 +630,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/', 'GET',
             path_params,
             query_params,
@@ -782,7 +783,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -943,7 +944,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1104,7 +1105,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1238,7 +1239,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/{id}/', 'GET',
             path_params,
             query_params,
@@ -1391,7 +1392,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/{id}/', 'PUT',
             path_params,
             query_params,
@@ -1552,7 +1553,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/{id}/', 'PUT',
             path_params,
             query_params,
@@ -1713,7 +1714,7 @@ class UsersApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/users/users/{id}/', 'PUT',
             path_params,
             query_params,

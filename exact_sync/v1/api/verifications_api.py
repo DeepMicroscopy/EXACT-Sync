@@ -27,10 +27,11 @@ class VerificationsApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_verification(self, **kwargs):  # noqa: E501
         """create_verification  # noqa: E501
@@ -121,7 +122,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/', 'POST',
             path_params,
             query_params,
@@ -230,7 +231,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/', 'POST',
             path_params,
             query_params,
@@ -339,7 +340,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/', 'POST',
             path_params,
             query_params,
@@ -460,7 +461,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -597,7 +598,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/', 'GET',
             path_params,
             query_params,
@@ -742,7 +743,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -891,7 +892,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1040,7 +1041,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1174,7 +1175,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/{id}/', 'GET',
             path_params,
             query_params,
@@ -1319,7 +1320,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/{id}/', 'PUT',
             path_params,
             query_params,
@@ -1468,7 +1469,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/{id}/', 'PUT',
             path_params,
             query_params,
@@ -1617,7 +1618,7 @@ class VerificationsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/verifications/{id}/', 'PUT',
             path_params,
             query_params,

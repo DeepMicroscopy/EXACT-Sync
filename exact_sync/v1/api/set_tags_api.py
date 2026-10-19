@@ -27,10 +27,11 @@ class SetTagsApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_set_tag(self, **kwargs):  # noqa: E501
         """create_set_tag  # noqa: E501
@@ -119,7 +120,7 @@ class SetTagsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/set_tags/', 'POST',
             path_params,
             query_params,
@@ -224,7 +225,7 @@ class SetTagsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/set_tags/', 'POST',
             path_params,
             query_params,
@@ -318,7 +319,7 @@ class SetTagsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/set_tags/', 'POST',
             path_params,
             query_params,
@@ -406,7 +407,7 @@ class SetTagsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/set_tags/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -527,7 +528,7 @@ class SetTagsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/set_tags/', 'GET',
             path_params,
             query_params,
@@ -628,7 +629,7 @@ class SetTagsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/set_tags/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -721,7 +722,7 @@ class SetTagsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/set_tags/{id}/', 'GET',
             path_params,
             query_params,
@@ -822,7 +823,7 @@ class SetTagsApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/set_tags/{id}/', 'PUT',
             path_params,
             query_params,

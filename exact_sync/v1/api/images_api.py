@@ -31,10 +31,11 @@ class ImagesApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def get_slide_information(self, id, **kwargs):
         """create_image  # noqa: E501
@@ -119,7 +120,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/images/{id}/slide_information/', 'GET',
             path_params,
             query_params,
@@ -235,7 +236,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        response = self.api_client.call_api(
+        response = self._call_api(
             '/api/v1/images/images/{id}/get_patch', 'GET',
             path_params,
             query_params,
@@ -258,7 +259,7 @@ class ImagesApi(PaginationBaseAPI):
         
         path = f'/images/api/image/crop/{image_id}/{x}/{y}/{z}/{w}/{h}/{target_imageset_id}/'
 
-        return self.api_client.call_api(
+        return self._call_api(
             path, 'GET',
             path_params={},
             query_params=[],
@@ -297,7 +298,7 @@ class ImagesApi(PaginationBaseAPI):
         """
         path = f'/images/image/centered_snapshot/{image_source}/{x}/{y}/{size_x}/{size_y}/'
 
-        response = self.api_client.call_api(
+        response = self._call_api(
             path, 'GET',
             path_params={},
             query_params=[],
@@ -405,7 +406,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/images/', 'POST',
             path_params,
             query_params,
@@ -541,7 +542,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/images/index_image/', 'POST',
             path_params,
             query_params,
@@ -630,7 +631,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/images/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -811,7 +812,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/images/', 'GET',
             path_params,
             query_params,
@@ -931,7 +932,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/images/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -1102,7 +1103,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/images/{id}/', 'GET',
             path_params,
             query_params,
@@ -1202,7 +1203,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/images/images/{id}/', 'PUT',
             path_params,
             query_params,
@@ -1259,7 +1260,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        response, status_code, header = self.api_client.call_api(
+        response, status_code, header = self._call_api(
             '/images/api/image/download/{}/'.format(id), 'GET',
             path_params,
             query_params,
@@ -1324,7 +1325,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        response, status_code, header = self.api_client.call_api(
+        response, status_code, header = self._call_api(
             '/api/v1/images/images/{}/thumbnail/'.format(id), 'GET',
             path_params,
             query_params,
@@ -1448,7 +1449,7 @@ class ImagesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        response = self.api_client.call_api(
+        response = self._call_api(
             f'/api/v1/images/images/{id}/update_image_cache/', 'PATCH',
             path_params,
             query_params,

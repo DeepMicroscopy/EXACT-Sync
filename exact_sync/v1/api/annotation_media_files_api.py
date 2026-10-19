@@ -26,10 +26,11 @@ class AnnotationMediaFilesApi(PaginationBaseAPI):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client=None, retry=True):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
+        self.retry = retry
 
     def create_annotation_media_file(self, **kwargs):  # noqa: E501
         """create_annotation_media_file  # noqa: E501
@@ -122,7 +123,7 @@ class AnnotationMediaFilesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_media_files/', 'POST',
             path_params,
             query_params,
@@ -211,7 +212,7 @@ class AnnotationMediaFilesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_media_files/{id}/', 'DELETE',
             path_params,
             query_params,
@@ -336,7 +337,7 @@ class AnnotationMediaFilesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_media_files/', 'GET',
             path_params,
             query_params,
@@ -445,7 +446,7 @@ class AnnotationMediaFilesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_media_files/{id}/', 'PATCH',
             path_params,
             query_params,
@@ -564,7 +565,7 @@ class AnnotationMediaFilesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_media_files/{id}/', 'GET',
             path_params,
             query_params,
@@ -666,7 +667,7 @@ class AnnotationMediaFilesApi(PaginationBaseAPI):
         # Authentication setting
         auth_settings = ['basicAuth']  # noqa: E501
 
-        return self.api_client.call_api(
+        return self._call_api(
             '/api/v1/annotations/annotation_media_files/{id}/', 'PUT',
             path_params,
             query_params,
