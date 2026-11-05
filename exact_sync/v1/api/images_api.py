@@ -1467,3 +1467,189 @@ class ImagesApi(PaginationBaseAPI):
 
 
         return json.loads(response.data), response
+
+
+    def move_image(self, id, target_imageset_id, **kwargs):  # noqa: E501
+        """Move an image to another image set  # noqa: E501
+
+        Moves the image including its files and annotations to the target image set,
+        like the "Move image" action in the web UI. The target image set must offer
+        all annotation types used on the image. Raises ApiException with the server's
+        reason (status 400, 403, 404 or 409) if the move is not allowed.
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.move_image(id, target_imageset_id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param int id: id of the image to move (required)
+        :param int target_imageset_id: id of the target image set (required)
+        :return: dict with the keys 'id' (image) and 'image_set' (new image set id)
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.move_image_with_http_info(id, target_imageset_id, **kwargs)  # noqa: E501
+        else:
+            (data) = self.move_image_with_http_info(id, target_imageset_id, **kwargs)  # noqa: E501
+            return data
+
+    def move_image_with_http_info(self, id, target_imageset_id, **kwargs):  # noqa: E501
+        """Move an image to another image set  # noqa: E501
+
+        See move_image.
+
+        :param async_req bool
+        :param int id: id of the image to move (required)
+        :param int target_imageset_id: id of the target image set (required)
+        :return: dict with the keys 'id' (image) and 'image_set' (new image set id)
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['id', 'target_imageset_id']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        params = locals()
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method move_image" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        # verify the required parameter 'id' is set
+        if ('id' not in params or
+                params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `move_image`")  # noqa: E501
+        # verify the required parameter 'target_imageset_id' is set
+        if ('target_imageset_id' not in params or
+                params['target_imageset_id'] is None):
+            raise ValueError("Missing the required parameter `target_imageset_id` when calling `move_image`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'id' in params:
+            path_params['id'] = params['id']  # noqa: E501
+        if 'target_imageset_id' in params:
+            path_params['target_imageset_id'] = params['target_imageset_id']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['basicAuth']  # noqa: E501
+
+        return self._call_api(
+            '/images/api/image/move/{id}/{target_imageset_id}/', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='object',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def list_move_targets(self, **kwargs):  # noqa: E501
+        """List the image sets the user can move images to  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_move_targets(async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :return: list of dicts with the keys 'id', 'name' and 'team'
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.list_move_targets_with_http_info(**kwargs)  # noqa: E501
+        else:
+            (data) = self.list_move_targets_with_http_info(**kwargs)  # noqa: E501
+            return data
+
+    def list_move_targets_with_http_info(self, **kwargs):  # noqa: E501
+        """List the image sets the user can move images to  # noqa: E501
+
+        See list_move_targets.
+
+        :param async_req bool
+        :return: list of dicts with the keys 'id', 'name' and 'team'
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = []  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        params = locals()
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_move_targets" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        collection_formats = {}
+
+        path_params = {}
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['basicAuth']  # noqa: E501
+
+        return self._call_api(
+            '/images/api/image/move-targets/', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='object',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
