@@ -21,9 +21,11 @@ Method | HTTP request | Description
 [**list_image_registrations**](ImagesApi.md#list_image_registrations) | **GET** /api/v1/images/registration/ | 
 [**list_image_sets**](ImagesApi.md#list_image_sets) | **GET** /api/v1/images/image_sets/ | 
 [**list_images**](ImagesApi.md#list_images) | **GET** /api/v1/images/images/ | 
+[**list_move_targets**](ImagesApi.md#list_move_targets) | **GET** /images/api/image/move-targets/ | List image sets images can be moved to
 [**list_screening_modes**](ImagesApi.md#list_screening_modes) | **GET** /api/v1/images/screening_modes/ | 
 [**list_set_tags**](ImagesApi.md#list_set_tags) | **GET** /api/v1/images/set_tags/ | 
 [**list_set_versions**](ImagesApi.md#list_set_versions) | **GET** /api/v1/images/set_versions/ | 
+[**move_image**](ImagesApi.md#move_image) | **POST** /images/api/image/move/{id}/{target_imageset_id}/ | Move an image with its annotations to another image set
 [**partial_update_image**](ImagesApi.md#partial_update_image) | **PATCH** /api/v1/images/images/{id}/ | 
 [**partial_update_image_registration**](ImagesApi.md#partial_update_image_registration) | **PATCH** /api/v1/images/registration/{id}/ | 
 [**partial_update_image_set**](ImagesApi.md#partial_update_image_set) | **PATCH** /api/v1/images/image_sets/{id}/ | 
@@ -1023,6 +1025,38 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **list_move_targets**
+> list[object] list_move_targets()
+
+List the image sets the user can move images to (image sets of the user's teams that are not locked).
+
+### Example
+```python
+from exact_sync.v1.api.images_api import ImagesApi
+
+images_api = ImagesApi(client)
+for target in images_api.list_move_targets():
+    print(target['id'], target['name'], target['team'])
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+**list[object]**: one dict per image set with the keys `id`, `name` and `team` (team name)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **list_screening_modes**
 > InlineResponse2007 list_screening_modes(limit=limit, offset=offset, id=id, image=image, user=user)
 
@@ -1178,6 +1212,54 @@ Name | Type | Description  | Notes
 ### Authorization
 
 No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **move_image**
+> object move_image(id, target_imageset_id)
+
+Move an image including its files and annotations to another image set, like the "Move image"
+action in the web UI. Annotations keep their annotation type, so the target image set must offer
+all annotation types used on the image (i.e. belong to a product that has these types).
+
+The server refuses the move with an `ApiException` and a `detail` message if the image is
+already in the target image set, is server generated, the user may not remove images from the
+source or add images to the target (or one of them is locked), the target already contains an
+image or file with the same name (409), or the target lacks an annotation type used on the image (409).
+
+### Example
+```python
+from exact_sync.v1.api.images_api import ImagesApi
+from exact_sync.v1.rest import ApiException
+
+images_api = ImagesApi(client)
+try:
+    result = images_api.move_image(id=image.id, target_imageset_id=target_set.id)
+    print(result)  # {'id': ..., 'image_set': ...}
+except ApiException as e:
+    print("Exception when calling ImagesApi->move_image: %s
+" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| id of the image to move | 
+ **target_imageset_id** | **int**| id of the target image set | 
+
+### Return type
+
+**object**: dict with the keys `id` (image id) and `image_set` (new image set id)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 

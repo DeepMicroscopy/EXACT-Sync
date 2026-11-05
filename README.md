@@ -87,6 +87,18 @@ snapshot = images_api.get_snapshot(image_source=image.id, x=1000, y=1000, size_x
 snapshot.save('snapshot.png')
 ```
 
+#### Move an image to another image set
+
+Moves the image with its files and annotations, like "Move image" in the web UI. The target
+image set must offer all annotation types used on the image, otherwise the server refuses the
+move and an `ApiException` with the reason is raised.
+
+```python
+targets = images_api.list_move_targets()  # [{'id': 3, 'name': 'Set B', 'team': 'Team'}, ...]
+result = images_api.move_image(id=image.id, target_imageset_id=targets[0]['id'])
+# {'id': image.id, 'image_set': targets[0]['id']}
+```
+
 #### Automatic retries on gateway errors
 
 All API objects retry requests that fail with a transient gateway error (HTTP 502, 503 or 504)
