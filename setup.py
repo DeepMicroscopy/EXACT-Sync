@@ -18,6 +18,7 @@ setuptools.setup(
         'tqdm', 
         'requests-toolbelt',
         'pillow',
+        'six',
         "locust==1.1.0"
     ],
     classifiers=[
