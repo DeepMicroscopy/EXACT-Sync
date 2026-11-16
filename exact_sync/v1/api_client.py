@@ -167,11 +167,23 @@ class ApiClient(object):
                 m = MultipartEncoder(fields=fields, boundary='UploadBoundary-xyz')
                 header_params['Content-Type'] =  m.content_type
             
-                response = requests.post(url, headers=header_params, data=m)
-                
+                try:
+                    response = requests.post(url, headers=header_params, data=m)
+                finally:
+                    f.close()
+
+                # like rest.RESTClientObject.request: a non-2xx answer raises instead of
+                # being deserialized into an empty model
+                if not 200 <= response.status_code <= 299:
+                    error = rest.ApiException(status=response.status_code, reason=response.reason)
+                    error.body = response.content
+                    error.headers = response.headers
+                    raise error
+
                 response_data = json.loads(response.text)
-                
+
                 return_data = self.__deserialize(response_data, response_type)
+                response_status, response_headers = response.status_code, response.headers
         else:
             response_data = self.request(
                 method, url, query_params=query_params, headers=header_params,
@@ -188,12 +200,12 @@ class ApiClient(object):
                     return_data = self.deserialize(response_data, response_type)
                 else:
                     return_data = None
+            response_status, response_headers = response_data.status, response_data.getheaders()
 
         if _return_http_data_only:
             return (return_data)
         else:
-            return (return_data, response_data.status,
-                    response_data.getheaders())
+            return (return_data, response_status, response_headers)
 
     def sanitize_for_serialization(self, obj):
         """Builds a JSON POST object.

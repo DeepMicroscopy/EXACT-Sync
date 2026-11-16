@@ -1242,8 +1242,7 @@ try:
     result = images_api.move_image(id=image.id, target_imageset_id=target_set.id)
     print(result)  # {'id': ..., 'image_set': ...}
 except ApiException as e:
-    print("Exception when calling ImagesApi->move_image: %s
-" % e)
+    print("Exception when calling ImagesApi->move_image: %s\n" % e)
 ```
 
 ### Parameters
